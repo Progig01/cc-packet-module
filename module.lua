@@ -164,15 +164,16 @@ local m = {}
 		local received 		= false
 		local matchesFilter = false
 		local alreadyRouted = false
+		local timerID = nil
 
 		--Loop until a valid packet that meets filtering conditions comes in
 		while not received do
 			--If timeout is enabled, start a timer here
 			if timeout > 0 then
-				os.startTimer(timeout)
+				timerID = os.startTimer(timeout)
 			end
 
-			local event, _, _, senderID, rawMessage, transmissionDistance = os.pullEvent()
+			local event, id, _, senderID, rawMessage, transmissionDistance = os.pullEvent()
 
 			--If event is modem_message, go on, otherwise ignore it and wait for another.
 			if event == "modem_message" then
@@ -219,7 +220,7 @@ local m = {}
 
 					end
 				end
-			elseif event == "timer" then
+			elseif event == "timer" and timerID == id then
 				return false
 			end
 		end
