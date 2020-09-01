@@ -85,7 +85,7 @@ local m = {}
 			if peripheral.getType(sides[i]) == "modem" then
 				if not suppress then print("Found modem on " .. sides[i] .. " side...") end
 				modemSide = sides[i]
-			if not suppress then print("Checking if modem is enabled...") end
+				if not suppress then print("Checking if modem is enabled...") end
 				if rednet.isOpen(modemSide) then
 				if not suppress then print("Modem already opened.") end
 				break
